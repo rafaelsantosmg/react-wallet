@@ -3,19 +3,21 @@ import PropTypes from 'prop-types';
 
 export default class Input extends Component {
   render() {
-    const { id, dataTestId, label, onChangeInput, placeholder } = this.props;
+    const { id, dataTestId, name, type,
+      label, onChangeInput, placeholder } = this.props;
     return (
       <label htmlFor={ id } className="col-form-label">
         { label }
         <input
           id={ id }
+          type={ type }
+          name={ name }
           data-testid={ dataTestId }
-          type="text"
-          className="form-control"
           placeholder={ placeholder }
+          onChange={ onChangeInput }
+          className="form-control"
           aria-label="Username"
           aria-describedby="addon-wrapping"
-          onChange={ onChangeInput }
         />
       </label>
     );
@@ -25,15 +27,19 @@ export default class Input extends Component {
 Input.propTypes = {
   id: PropTypes.string,
   dataTestId: PropTypes.string,
+  name: PropTypes.string,
   label: PropTypes.string,
   placeholder: PropTypes.string,
   onChangeInput: PropTypes.func,
+  type: PropTypes.string,
 };
 
 Input.defaultProps = {
   id: '',
   dataTestId: '',
+  name: '',
   label: '',
   placeholder: '',
+  type: '',
   onChangeInput: () => { },
 };

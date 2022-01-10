@@ -13,8 +13,11 @@ export default class FormLogin extends Component {
           <div className="mb-3 row">
             <div className="mb-3">
               <Input
-                id={ inputId }
                 label="Email"
+                id={ inputId }
+                type="email"
+                name="email"
+                dataTestId="email-input"
                 placeholder="email@email.com"
                 onChangeInput={ onChangeInput }
               />
@@ -24,9 +27,12 @@ export default class FormLogin extends Component {
             <div className="mb-3">
               <Input
                 id={ inputId }
+                type="password"
+                dataTestId="password-input"
                 label="Password"
                 placeholder="password"
                 onChangeInput={ onChangeInput }
+                name="password"
               />
             </div>
           </div>
@@ -43,10 +49,19 @@ export default class FormLogin extends Component {
 }
 
 FormLogin.propTypes = {
-  onChangeInput: PropTypes.func.isRequired,
-  isDisabled: PropTypes.bool.isRequired,
-  onSubmit: PropTypes.func.isRequired,
-  inputId: PropTypes.string.isRequired,
-  buttonId: PropTypes.string.isRequired,
-  children: PropTypes.string.isRequired,
+  onChangeInput: PropTypes.func,
+  isDisabled: PropTypes.bool,
+  onSubmit: PropTypes.func,
+  inputId: PropTypes.string,
+  buttonId: PropTypes.string,
+  children: PropTypes.string,
+};
+
+FormLogin.defaultProps = {
+  onChangeInput: () => {},
+  isDisabled: false,
+  onSubmit: () => {},
+  inputId: '',
+  buttonId: '',
+  children: '',
 };
