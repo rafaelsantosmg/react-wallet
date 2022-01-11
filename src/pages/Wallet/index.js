@@ -9,12 +9,14 @@ class Wallet extends React.Component {
   constructor() {
     super();
     this.state = {
-      id: 0,
-      value: 0,
-      description: '',
-      currency: '',
-      method: '',
-      tag: '',
+      expenses: {
+        id: 0,
+        value: 0,
+        description: '',
+        currency: 'USD',
+        method: 'Dinheiro',
+        tag: 'Alimentação',
+      },
       total: 0,
     };
   }
@@ -26,34 +28,48 @@ class Wallet extends React.Component {
 
   onChangeInput = ({ target }) => {
     const { name, value } = target;
-    this.setState({ [name]: value });
-  }
+    this.setState((prevState) => (
+      {
+        expenses: {
+          ...prevState.expenses, [name]: value,
+        },
+      }));
+  };
 
   onSubmit = (event) => {
     event.preventDefault();
     const { handleClick, requestApi, currencies } = this.props;
-    this.setState((prevState) => ({ id: prevState.id + 1 }));
+    this.setState((prevState) => ({
+      expenses: {
+        id: prevState.expenses.id + 1,
+        value: 0,
+        description: '',
+        currency: 'USD',
+      },
+    }));
     requestApi();
+    const { expenses } = this.state;
+    handleClick({ ...expenses, exchangeRates: currencies[0] });
     this.sumExpenses();
-    handleClick({ ...this.state, exchangeRates: currencies[0] });
-  }
+  };
 
   sumExpenses = () => {
     const { currencies } = this.props;
-    const { value, currency } = this.state;
+    const { expenses: { value, currency } } = this.state;
     const currencyFind = Object.values(currencies[0])
       .find((curr) => curr.code === currency);
     const sum = value * currencyFind.ask;
     this.setState((prevState) => ({ total: prevState.total + sum }));
-  }
+  };
 
   render() {
     const { currenciesKey } = this.props;
-    const { total } = this.state;
+    const { total, expenses: { value } } = this.state;
     return (
       <>
         <Header total={ total } />
         <FormWallet
+          value={ value }
           currenciesKey={ currenciesKey }
           onChangeInput={ this.onChangeInput }
           onSubmit={ this.onSubmit }
@@ -71,7 +87,8 @@ const mapDispatchToProps = (dispatch) => ({
 const mapStateToProps = (state) => ({
   currencies: state.wallet.currencies,
   currenciesKey: state.wallet.currenciesKey,
-  expenses: state.wallet.expenses,
+  expensesStore: state.wallet.expenses,
+  id: state.wallet.expenses.length,
 });
 
 Wallet.propTypes = {
@@ -85,7 +102,7 @@ Wallet.defaultProps = {
   currencies: {},
   requestApi: () => { },
   currenciesKey: [''],
-  handleClick: () => {},
+  handleClick: () => { },
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Wallet);

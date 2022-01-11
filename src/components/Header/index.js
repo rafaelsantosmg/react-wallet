@@ -14,14 +14,13 @@ export class Header extends Component {
           <div className="user-email">
             <p data-testid="email-field">{email}</p>
           </div>
-          <p
-            data-testid="total-field"
-          >
+          <p>
+            Despesa totais R$
+            {'  '}
             <span
               data-testid="total-field"
             >
-              { `Despesas Totais ${total
-                .toLocaleString('pt-br', { style: 'currency', currency: 'BRL' })}` }
+              { total.toFixed(2) }
             </span>
           </p>
           <p data-testid="header-currency-field">BRL</p>

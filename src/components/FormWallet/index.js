@@ -8,7 +8,7 @@ import './style.css';
 
 export default class FormWallet extends Component {
   render() {
-    const { onChangeInput, currenciesKey, onSubmit } = this.props;
+    const { value, onChangeInput, currenciesKey, onSubmit } = this.props;
     return (
       <form className="wallet-form" onSubmit={ onSubmit }>
         <div className="row">
@@ -22,8 +22,8 @@ export default class FormWallet extends Component {
             <Input
               type="text"
               name="value"
+              value={ value }
               dataTestId="value-input"
-              placeholder="R$ 0,00"
               onChangeInput={ onChangeInput }
             />
           </div>
@@ -81,12 +81,14 @@ export default class FormWallet extends Component {
 }
 
 FormWallet.propTypes = {
+  value: PropTypes.number,
   onChangeInput: PropTypes.func,
   currenciesKey: PropTypes.arrayOf(PropTypes.string),
   onSubmit: PropTypes.func,
 };
 
 FormWallet.defaultProps = {
+  value: 0,
   onChangeInput: () => { },
   currenciesKey: [],
   onSubmit: () => {},

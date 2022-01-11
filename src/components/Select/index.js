@@ -17,7 +17,6 @@ export default class Select extends Component {
           data-testid={ dataTestId }
           onChange={ onChangeSelect }
         >
-          <option value="Selected">Selecione...</option>
           { options.filter((option) => option !== 'USDT').map((option, index) => (
             <option key={ index } value={ option }>{ option }</option>
           )) }
