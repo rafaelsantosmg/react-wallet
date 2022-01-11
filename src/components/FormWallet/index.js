@@ -6,7 +6,9 @@ import './style.css';
 
 export default class FormWallet extends Component {
   render() {
-    const { inputId, onChangeInput } = this.props;
+    const { inputId, onChangeInput, currenciesKey } = this.props;
+    const paymentMethod = ['Dinheiro', 'Cartão de crédito', 'Cartão de débito'];
+    const tagCategories = ['Alimentação', 'Lazer', 'Trabalho', 'Transporte', 'Saúde'];
     return (
       <form className="wallet-form">
         <div className="row">
@@ -28,23 +30,23 @@ export default class FormWallet extends Component {
           </div>
           <div className="col">
             <Select
-              type="moeda"
               label="Moeda"
               dataTestId="currency-input"
+              options={ currenciesKey }
             />
           </div>
           <div className="col">
             <Select
-              type="metodo"
               label="Método de Pagamento"
               dataTestId="method-input"
+              options={ paymentMethod }
             />
           </div>
           <div className="col">
             <Select
-              type="tag"
               label="Tag"
               dataTestId="tag-input"
+              options={ tagCategories }
             />
           </div>
           <div className="col">
@@ -72,9 +74,11 @@ export default class FormWallet extends Component {
 FormWallet.propTypes = {
   inputId: PropTypes.string,
   onChangeInput: PropTypes.func,
+  currenciesKey: PropTypes.arrayOf(PropTypes.string),
 };
 
 FormWallet.defaultProps = {
   inputId: '',
   onChangeInput: () => { },
+  currenciesKey: [],
 };

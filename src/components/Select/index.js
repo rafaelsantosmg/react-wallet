@@ -3,10 +3,10 @@ import PropTypes from 'prop-types';
 
 export default class Select extends Component {
   render() {
-    const { label, dataTestId } = this.props;
+    const { label, dataTestId, options } = this.props;
     return (
       <label
-        className="input-group-text"
+        className="col-form-label"
         htmlFor="inputGroupSelect01"
       >
         { label }
@@ -15,10 +15,10 @@ export default class Select extends Component {
           id="inputGroupSelect01"
           data-testid={ dataTestId }
         >
-          <option selected>Choose...</option>
-          <option value="1">One</option>
-          <option value="2">Two</option>
-          <option value="3">Three</option>
+          <option value="Selected">Selecione...</option>
+          { options.map((option, index) => (
+            <option key={ index } value={ option }>{ option }</option>
+          )) }
         </select>
       </label>
     );
@@ -26,6 +26,13 @@ export default class Select extends Component {
 }
 
 Select.propTypes = {
-  label: PropTypes.string.isRequired,
-  dataTestId: PropTypes.string.isRequired,
+  label: PropTypes.string,
+  dataTestId: PropTypes.string,
+  options: PropTypes.arrayOf(PropTypes.string),
+};
+
+Select.defaultProps = {
+  label: '',
+  dataTestId: '',
+  options: [''],
 };

@@ -12,11 +12,11 @@ class Wallet extends React.Component {
   }
 
   render() {
-    const { currencies } = this.props;
+    const { currenciesKey } = this.props;
     return (
       <>
         <Header />
-        <FormWallet currencies={ currencies } />
+        <FormWallet currenciesKey={ currenciesKey } />
       </>
     );
   }
@@ -27,18 +27,18 @@ const mapDispatchToProps = (dispatch) => ({
 });
 
 const mapStateToProps = (state) => ({
-  currencies: state.wallet.currencies,
+  currenciesKey: state.wallet.currenciesKey,
   loading: state.wallet.loading,
 });
 
 Wallet.propTypes = {
   requestApi: PropTypes.func,
-  currencies: PropTypes.objectOf(),
+  currenciesKey: PropTypes.arrayOf(PropTypes.string),
 };
 
 Wallet.defaultProps = {
   requestApi: () => {},
-  currencies: {},
+  currenciesKey: [''],
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Wallet);
