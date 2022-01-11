@@ -28,12 +28,12 @@ export class Header extends Component {
 
 Header.propTypes = {
   email: PropTypes.string,
-  total: PropTypes.string,
+  total: PropTypes.number,
 };
 
 Header.defaultProps = {
   email: '',
-  total: '',
+  total: 0,
 };
 
 const mapStateToProps = (state) => ({

@@ -1,16 +1,16 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
+import { paymentMethod, tagCategories } from '../../services/data';
 import Input from '../Input';
 import Select from '../Select';
+import Button from '../Button';
 import './style.css';
 
 export default class FormWallet extends Component {
   render() {
-    const { inputId, onChangeInput, currenciesKey } = this.props;
-    const paymentMethod = ['Dinheiro', 'Cartão de crédito', 'Cartão de débito'];
-    const tagCategories = ['Alimentação', 'Lazer', 'Trabalho', 'Transporte', 'Saúde'];
+    const { onChangeInput, currenciesKey, onSubmit } = this.props;
     return (
-      <form className="wallet-form">
+      <form className="wallet-form" onSubmit={ onSubmit }>
         <div className="row">
           <div className="col">
             <span
@@ -20,9 +20,8 @@ export default class FormWallet extends Component {
               Valor
             </span>
             <Input
-              id={ inputId }
               type="text"
-              name="despesa"
+              name="value"
               dataTestId="value-input"
               placeholder="R$ 0,00"
               onChangeInput={ onChangeInput }
@@ -30,23 +29,29 @@ export default class FormWallet extends Component {
           </div>
           <div className="col">
             <Select
+              name="currency"
               label="Moeda"
               dataTestId="currency-input"
               options={ currenciesKey }
+              onChangeSelect={ onChangeInput }
             />
           </div>
           <div className="col">
             <Select
+              name="method"
               label="Método de Pagamento"
               dataTestId="method-input"
               options={ paymentMethod }
+              onChangeSelect={ onChangeInput }
             />
           </div>
           <div className="col">
             <Select
+              name="tag"
               label="Tag"
               dataTestId="tag-input"
               options={ tagCategories }
+              onChangeSelect={ onChangeInput }
             />
           </div>
           <div className="col">
@@ -57,13 +62,17 @@ export default class FormWallet extends Component {
               Descrição
             </span>
             <Input
-              id={ inputId }
               type="text"
               name="description"
               dataTestId="description-input"
               placeholder="Descrição"
               onChangeInput={ onChangeInput }
             />
+          </div>
+          <div className="col">
+            <Button>
+              Adicionar despesa
+            </Button>
           </div>
         </div>
       </form>
@@ -72,13 +81,13 @@ export default class FormWallet extends Component {
 }
 
 FormWallet.propTypes = {
-  inputId: PropTypes.string,
   onChangeInput: PropTypes.func,
   currenciesKey: PropTypes.arrayOf(PropTypes.string),
+  onSubmit: PropTypes.func,
 };
 
 FormWallet.defaultProps = {
-  inputId: '',
   onChangeInput: () => { },
   currenciesKey: [],
+  onSubmit: () => {},
 };

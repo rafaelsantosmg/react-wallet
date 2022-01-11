@@ -20,7 +20,7 @@ export default class Button extends Component {
 Button.propTypes = {
   children: PropTypes.string,
   id: PropTypes.string,
-  isDisabled: PropTypes,
+  isDisabled: PropTypes.bool,
 };
 
 Button.defaultProps = {
