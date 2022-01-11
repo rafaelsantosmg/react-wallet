@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 import fetchRequest, { saveWalletExpenses } from '../../actions';
 import Header from '../../components/Header';
 import FormWallet from '../../components/FormWallet';
+import TableWallet from '../../components/TableWallet';
 
 class Wallet extends React.Component {
   constructor() {
@@ -58,7 +59,7 @@ class Wallet extends React.Component {
     const { expenses: { value, currency } } = this.state;
     const currencyFind = Object.values(currencies[0])
       .find((curr) => curr.code === currency);
-    const sum = value * currencyFind.ask;
+    const sum = value * Number(currencyFind.ask);
     this.setState((prevState) => ({ total: prevState.total + sum }));
   };
 
@@ -74,6 +75,7 @@ class Wallet extends React.Component {
           onChangeInput={ this.onChangeInput }
           onSubmit={ this.onSubmit }
         />
+        <TableWallet />
       </>
     );
   }
