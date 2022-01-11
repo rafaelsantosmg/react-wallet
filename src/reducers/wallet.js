@@ -1,5 +1,9 @@
 // Esse reducer será responsável por tratar o todas as informações relacionadas as despesas
-import { SAVE_WALLET_CURRENCY, CREATE_CURRENCIES, SAVE_WALLET_EXPENSES } from '../actions';
+import {
+  SAVE_WALLET_CURRENCY,
+  CREATE_CURRENCIES,
+  SAVE_WALLET_EXPENSES,
+} from '../actions';
 
 const INITIAL_STATE = {
   currencies: [],

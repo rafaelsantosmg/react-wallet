@@ -34,7 +34,17 @@ class Wallet extends React.Component {
     const { handleClick, requestApi, currencies } = this.props;
     this.setState((prevState) => ({ id: prevState.id + 1 }));
     requestApi();
+    this.sumExpenses();
     handleClick({ ...this.state, exchangeRates: currencies[0] });
+  }
+
+  sumExpenses = () => {
+    const { currencies } = this.props;
+    const { value, currency } = this.state;
+    const currencyFind = Object.values(currencies[0])
+      .find((curr) => curr.code === currency);
+    const sum = value * currencyFind.ask;
+    this.setState((prevState) => ({ total: prevState.total + sum }));
   }
 
   render() {
@@ -61,6 +71,7 @@ const mapDispatchToProps = (dispatch) => ({
 const mapStateToProps = (state) => ({
   currencies: state.wallet.currencies,
   currenciesKey: state.wallet.currenciesKey,
+  expenses: state.wallet.expenses,
 });
 
 Wallet.propTypes = {

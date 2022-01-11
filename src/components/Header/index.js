@@ -17,7 +17,12 @@ export class Header extends Component {
           <p
             data-testid="total-field"
           >
-            <span data-testid="total-field">{ `Despesas Totais ${total}` }</span>
+            <span
+              data-testid="total-field"
+            >
+              { `Despesas Totais ${total
+                .toLocaleString('pt-br', { style: 'currency', currency: 'BRL' })}` }
+            </span>
           </p>
           <p data-testid="header-currency-field">BRL</p>
         </div>
