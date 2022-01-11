@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import propTypes from 'prop-types';
+import PropTypes from 'prop-types';
 
 export default class Button extends Component {
   render() {
@@ -18,7 +18,13 @@ export default class Button extends Component {
 }
 
 Button.propTypes = {
-  children: propTypes.string.isRequired,
-  id: propTypes.string.isRequired,
-  isDisabled: propTypes.bool.isRequired,
+  children: PropTypes.string,
+  id: PropTypes.string,
+  isDisabled: PropTypes,
+};
+
+Button.defaultProps = {
+  children: '',
+  id: '',
+  isDisabled: false,
 };
