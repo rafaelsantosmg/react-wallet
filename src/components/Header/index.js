@@ -5,8 +5,24 @@ import trybeLogo from '../../images/trybe_logo.png';
 import './style.css';
 
 export class Header extends Component {
+  sumExpenses = () => {
+    const { expenses } = this.props;
+    if (expenses.length !== 0) {
+      const sum = expenses.reduce((acc, expense) => {
+        if (expense.currency === expense.exchangeRates[expense.currency].code) {
+          acc += (expense.value * expense.exchangeRates[expense.currency].ask);
+          return acc;
+        }
+        return acc;
+      }, 0);
+      return sum;
+    }
+    return 0;
+  }
+
   render() {
-    const { email, total } = this.props;
+    const total = this.sumExpenses();
+    const { email } = this.props;
     return (
       <header className="header">
         <div className="header-content">
@@ -20,7 +36,7 @@ export class Header extends Component {
             <span
               data-testid="total-field"
             >
-              { total.toFixed(2) }
+              { Number(total).toFixed(2) }
             </span>
           </p>
           <p data-testid="header-currency-field">BRL</p>
@@ -32,16 +48,17 @@ export class Header extends Component {
 
 Header.propTypes = {
   email: PropTypes.string,
-  total: PropTypes.number,
+  expenses: PropTypes.arrayOf(PropTypes.shape({})),
 };
 
 Header.defaultProps = {
   email: '',
-  total: 0,
+  expenses: [''],
 };
 
 const mapStateToProps = (state) => ({
   email: state.user.email,
+  expenses: state.wallet.expenses,
 });
 
 export default connect(mapStateToProps)(Header);

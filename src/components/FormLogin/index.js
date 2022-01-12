@@ -39,6 +39,8 @@ export default class FormLogin extends Component {
           </div>
           <Button
             isDisabled={ isDisabled }
+            btnClass="btn btn-primary btn-lg"
+            types="submit"
           >
             { children }
           </Button>

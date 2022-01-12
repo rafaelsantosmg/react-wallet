@@ -1,8 +1,16 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
+import { filterWalletExpenses } from '../../actions';
+import Button from '../Button';
 
 class TableWallet extends Component {
+  deleteExpense = (id) => {
+    const { expenses, removeExpense } = this.props;
+    const filterExpenses = expenses.filter((expense) => expense.id !== id);
+    removeExpense(filterExpenses);
+  }
+
   render() {
     const { expenses } = this.props;
     return (
@@ -31,9 +39,26 @@ class TableWallet extends Component {
               <td>{ Number(expense.exchangeRates[expense.currency].ask).toFixed(2) }</td>
               <td>
                 { Number(expense.value
-                    * expense.exchangeRates[expense.currency].ask).toFixed(2) }
+                  * expense.exchangeRates[expense.currency].ask).toFixed(2) }
               </td>
               <td>Real</td>
+              <td>
+                <Button
+                  type="button"
+                  btnClass="btn btn-dark"
+                >
+                  <i className="bi bi-pencil-square" style={ { fontSize: '20px' } } />
+                </Button>
+                { ' ' }
+                <Button
+                  type="button"
+                  btnClass="btn btn-dark"
+                  dataTestId="delete-btn"
+                  onChangeClick={ () => this.deleteExpense(expense.id) }
+                >
+                  <i className="bi bi-journal-x" style={ { fontSize: '20px' } } />
+                </Button>
+              </td>
             </tr>
           )) }
         </tbody>
@@ -46,12 +71,18 @@ const mapStateToProps = (state) => ({
   expenses: state.wallet.expenses,
 });
 
+const mapDispatchToProps = (dispatch) => ({
+  removeExpense: (expense) => dispatch(filterWalletExpenses(expense)),
+});
+
 TableWallet.propTypes = {
   expenses: PropTypes.arrayOf(PropTypes.shape({})),
+  removeExpense: PropTypes.func,
 };
 
 TableWallet.defaultProps = {
   expenses: [''],
+  removeExpense: () => {},
 };
 
-export default connect(mapStateToProps)(TableWallet);
+export default connect(mapStateToProps, mapDispatchToProps)(TableWallet);

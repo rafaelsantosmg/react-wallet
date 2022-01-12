@@ -77,7 +77,10 @@ export default class FormWallet extends Component {
             />
           </div>
           <div className="col">
-            <Button>
+            <Button
+              btnClass="btn btn-primary btn-lg"
+              types="submit"
+            >
               Adicionar despesa
             </Button>
           </div>
