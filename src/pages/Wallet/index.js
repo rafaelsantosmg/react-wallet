@@ -11,9 +11,9 @@ class Wallet extends React.Component {
     super();
     this.state = {
       expenses: {
-        id: 0,
-        value: 50,
-        description: 'dddddd',
+        id: '0',
+        value: '',
+        description: '',
         currency: 'USD',
         method: 'Dinheiro',
         tag: 'Alimentação',
@@ -43,9 +43,11 @@ class Wallet extends React.Component {
     this.setState((prevState) => ({
       expenses: {
         id: prevState.expenses.id + 1,
-        value: 0,
+        value: '0',
         description: '',
         currency: 'USD',
+        method: 'Dinheiro',
+        tag: 'Alimentação',
       },
     }));
     requestApi();
@@ -65,12 +67,12 @@ class Wallet extends React.Component {
 
   render() {
     const { currenciesKey } = this.props;
-    const { total, expenses: { value } } = this.state;
+    const { total, expenses } = this.state;
     return (
       <>
         <Header total={ total } />
         <FormWallet
-          value={ value }
+          expenses={ expenses }
           currenciesKey={ currenciesKey }
           onChangeInput={ this.onChangeInput }
           onSubmit={ this.onSubmit }

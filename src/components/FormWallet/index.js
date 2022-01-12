@@ -8,7 +8,8 @@ import './style.css';
 
 export default class FormWallet extends Component {
   render() {
-    const { value, onChangeInput, currenciesKey, onSubmit } = this.props;
+    const { expenses: { value, description, currency, method, tag },
+      onChangeInput, currenciesKey, onSubmit } = this.props;
     return (
       <form className="wallet-form" onSubmit={ onSubmit }>
         <div className="row">
@@ -20,6 +21,7 @@ export default class FormWallet extends Component {
               Valor
             </span>
             <Input
+              id="value-id"
               type="text"
               name="value"
               value={ value }
@@ -31,6 +33,7 @@ export default class FormWallet extends Component {
             <Select
               name="currency"
               label="Moeda"
+              value={ currency }
               dataTestId="currency-input"
               options={ currenciesKey }
               onChangeSelect={ onChangeInput }
@@ -40,6 +43,7 @@ export default class FormWallet extends Component {
             <Select
               name="method"
               label="Método de Pagamento"
+              value={ method }
               dataTestId="method-input"
               options={ paymentMethod }
               onChangeSelect={ onChangeInput }
@@ -49,6 +53,7 @@ export default class FormWallet extends Component {
             <Select
               name="tag"
               label="Tag"
+              value={ tag }
               dataTestId="tag-input"
               options={ tagCategories }
               onChangeSelect={ onChangeInput }
@@ -62,8 +67,10 @@ export default class FormWallet extends Component {
               Descrição
             </span>
             <Input
+              id="description-id"
               type="text"
               name="description"
+              value={ description }
               dataTestId="description-input"
               placeholder="Descrição"
               onChangeInput={ onChangeInput }
@@ -81,14 +88,20 @@ export default class FormWallet extends Component {
 }
 
 FormWallet.propTypes = {
-  value: PropTypes.number,
+  expenses: PropTypes.shape({
+    value: PropTypes.string,
+    description: PropTypes.string,
+    currency: PropTypes.string,
+    method: PropTypes.string,
+    tag: PropTypes.string,
+  }),
   onChangeInput: PropTypes.func,
   currenciesKey: PropTypes.arrayOf(PropTypes.string),
   onSubmit: PropTypes.func,
 };
 
 FormWallet.defaultProps = {
-  value: 0,
+  expenses: {},
   onChangeInput: () => { },
   currenciesKey: [],
   onSubmit: () => {},

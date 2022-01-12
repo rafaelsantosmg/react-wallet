@@ -5,16 +5,18 @@ import Button from '../Button';
 
 export default class FormLogin extends Component {
   render() {
-    const { isDisabled, onChangeInput, onSubmit, children } = this.props;
+    const { email, password, isDisabled, onChangeInput, onSubmit, children } = this.props;
     return (
       <form onSubmit={ onSubmit }>
         <div className="mb-3">
           <div className="mb-3 row">
             <div className="mb-3">
               <Input
+                id="email-id"
                 label="Email"
                 type="email"
                 name="email"
+                value={ email }
                 dataTestId="email-input"
                 placeholder="email@email.com"
                 onChangeInput={ onChangeInput }
@@ -24,6 +26,8 @@ export default class FormLogin extends Component {
           <div className="mb-3 row">
             <div className="mb-3">
               <Input
+                id="password-id"
+                value={ password }
                 type="password"
                 dataTestId="password-input"
                 label="Password"
@@ -45,6 +49,8 @@ export default class FormLogin extends Component {
 }
 
 FormLogin.propTypes = {
+  email: PropTypes.string,
+  password: PropTypes.string,
   onChangeInput: PropTypes.func,
   isDisabled: PropTypes.bool,
   onSubmit: PropTypes.func,
@@ -52,6 +58,8 @@ FormLogin.propTypes = {
 };
 
 FormLogin.defaultProps = {
+  email: '',
+  password: '',
   onChangeInput: () => {},
   isDisabled: false,
   onSubmit: () => {},

@@ -37,10 +37,12 @@ class Login extends React.Component {
   }
 
   render() {
-    const { isDisabled } = this.state;
+    const { isDisabled, email, password } = this.state;
     return (
       <div className="login-page" data-testid="page-login">
         <FormLogin
+          email={ email }
+          password={ password }
           title="Usuário"
           onChangeInput={ this.onChangeInput }
           isDisabled={ isDisabled }

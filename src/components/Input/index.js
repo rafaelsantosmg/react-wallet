@@ -12,7 +12,7 @@ export default class Input extends Component {
           id={ id }
           type={ type }
           name={ name }
-          value={ name === 'value' ? value : null }
+          value={ value }
           data-testid={ dataTestId }
           placeholder={ placeholder }
           onChange={ onChangeInput }
@@ -29,7 +29,7 @@ Input.propTypes = {
   id: PropTypes.string,
   dataTestId: PropTypes.string,
   name: PropTypes.string,
-  value: PropTypes.number,
+  value: PropTypes.string,
   label: PropTypes.string,
   placeholder: PropTypes.string,
   onChangeInput: PropTypes.func,
@@ -40,7 +40,7 @@ Input.defaultProps = {
   id: '',
   dataTestId: '',
   name: '',
-  value: 0,
+  value: '',
   label: '',
   placeholder: '',
   type: '',
