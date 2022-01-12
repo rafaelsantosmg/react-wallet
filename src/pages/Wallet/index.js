@@ -12,8 +12,8 @@ class Wallet extends React.Component {
     this.state = {
       expenses: {
         id: 0,
-        value: 0,
-        description: '',
+        value: 50,
+        description: 'dddddd',
         currency: 'USD',
         method: 'Dinheiro',
         tag: 'Alimentação',

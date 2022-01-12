@@ -1,8 +1,10 @@
 import React, { Component } from 'react';
-// import PropTypes from 'prop-types';
+import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
 
-export default class TableWallet extends Component {
+class TableWallet extends Component {
   render() {
+    const { expenses } = this.props;
     return (
       <table className="table table-dark table-hover">
         <thead>
@@ -19,18 +21,37 @@ export default class TableWallet extends Component {
           </tr>
         </thead>
         <tbody>
-          <tr className="table-active">
-            <td>teste</td>
-          </tr>
-          <tr>
-            <td>teste</td>
-          </tr>
-          <tr>
-            <td className="table-active">Larry the Bird</td>
-            <td>@twitter</td>
-          </tr>
+          { expenses.map((expense) => (
+            <tr key={ expense.id } className="table-active">
+              <td>{ expense.description }</td>
+              <td>{ expense.tag }</td>
+              <td>{ expense.method }</td>
+              <td>{ expense.value }</td>
+              <td>{ expense.exchangeRates[expense.currency].name }</td>
+              <td>{ Number(expense.exchangeRates[expense.currency].ask).toFixed(2) }</td>
+              <td>
+                { Number(expense.value
+                    * expense.exchangeRates[expense.currency].ask).toFixed(2) }
+              </td>
+              <td>Real</td>
+            </tr>
+          )) }
         </tbody>
       </table>
     );
   }
 }
+
+const mapStateToProps = (state) => ({
+  expenses: state.wallet.expenses,
+});
+
+TableWallet.propTypes = {
+  expenses: PropTypes.arrayOf(PropTypes.shape({})),
+};
+
+TableWallet.defaultProps = {
+  expenses: [''],
+};
+
+export default connect(mapStateToProps)(TableWallet);
