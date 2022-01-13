@@ -50,22 +50,31 @@ class Wallet extends React.Component {
     }));
   }
 
-  onSubmit = (event) => {
-    event.preventDefault();
-    const { handleClick, requestApi, quotations } = this.props;
+  changePrevState = () => {
     this.setState((prevState) => ({
       expenses: {
         ...prevState.expenses,
         id: prevState.expenses.id + 1,
       },
     }));
-    requestApi();
+  }
+
+  onChangeClick = () => {
+    const { handleClick, quotations } = this.props;
     const { expenses, isEdit } = this.state;
     if (!isEdit) {
       handleClick({ ...expenses, exchangeRates: quotations[0] });
     } else {
       this.onChangeEdit(expenses.id);
     }
+  }
+
+  onSubmit = (event) => {
+    event.preventDefault();
+    const { requestApi } = this.props;
+    this.changePrevState();
+    requestApi();
+    this.onChangeClick();
     this.resetState();
   };
 
@@ -80,10 +89,15 @@ class Wallet extends React.Component {
     changeIsEdit(expensesStore);
   }
 
-  changeEdit = (condition, id) => {
+  changeWalletEdit = (id) => {
     const { expensesStore } = this.props;
     const expenses = expensesStore.find((expense) => expense.id === id);
-    this.setState({ expenses, isEdit: true });
+    this.setState({ expenses });
+    this.changeEdit(true);
+  }
+
+  changeEdit = (condition) => {
+    this.setState({ isEdit: condition });
   }
 
   render() {
@@ -99,7 +113,10 @@ class Wallet extends React.Component {
           onChangeInput={ this.onChangeInput }
           onSubmit={ this.onSubmit }
         />
-        <TableWallet onChangeEdit={ this.changeEdit } />
+        <TableWallet
+          onChangeEdit={ this.changeWalletEdit }
+          changeEdit={ this.changeEdit }
+        />
       </>
     );
   }

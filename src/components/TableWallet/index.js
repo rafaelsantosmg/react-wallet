@@ -6,9 +6,10 @@ import Button from '../Button';
 
 class TableWallet extends Component {
   deleteExpense = (id) => {
-    const { expenses, removeExpense } = this.props;
+    const { expenses, removeExpense, changeEdit } = this.props;
     const filterExpenses = expenses.filter((expense) => expense.id !== id);
     removeExpense(filterExpenses);
+    changeEdit(false);
   }
 
   render() {
@@ -47,7 +48,7 @@ class TableWallet extends Component {
                   type="button"
                   btnClass="btn btn-dark"
                   dataTestId="edit-btn"
-                  onChangeClick={ () => onChangeEdit(true, expense.id) }
+                  onChangeClick={ () => onChangeEdit(expense.id) }
                 >
                   <i className="bi bi-pencil-square" style={ { fontSize: '20px' } } />
                 </Button>
@@ -82,12 +83,14 @@ TableWallet.propTypes = {
   expenses: PropTypes.arrayOf(PropTypes.shape({})),
   removeExpense: PropTypes.func,
   onChangeEdit: PropTypes.func,
+  changeEdit: PropTypes.func,
 };
 
 TableWallet.defaultProps = {
   expenses: [''],
   removeExpense: () => {},
   onChangeEdit: () => {},
+  changeEdit: () => {},
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(TableWallet);
