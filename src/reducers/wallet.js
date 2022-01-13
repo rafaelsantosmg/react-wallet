@@ -1,6 +1,6 @@
 // Esse reducer será responsável por tratar o todas as informações relacionadas as despesas
 import {
-  SAVE_WALLET_CURRENCY,
+  SAVE_WALLET_QUOTATIONS,
   CREATE_CURRENCIES,
   SAVE_WALLET_EXPENSES,
   EDIT_WALLET_EXPENSES,
@@ -9,20 +9,20 @@ import {
 const INITIAL_STATE = {
   currencies: [],
   expenses: [],
-  currenciesKey: [],
+  quotations: [],
 };
 
 const wallet = (state = INITIAL_STATE, action) => {
   switch (action.type) {
-  case SAVE_WALLET_CURRENCY:
+  case SAVE_WALLET_QUOTATIONS:
     return {
       ...state,
-      currencies: [action.currencies],
+      quotations: [action.quotations],
     };
   case CREATE_CURRENCIES:
     return {
       ...state,
-      currenciesKey: action.currenciesKey,
+      currencies: [...action.currencies],
     };
   case SAVE_WALLET_EXPENSES:
     return {

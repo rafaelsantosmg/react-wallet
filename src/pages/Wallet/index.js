@@ -52,7 +52,7 @@ class Wallet extends React.Component {
 
   onSubmit = (event) => {
     event.preventDefault();
-    const { handleClick, requestApi, currencies } = this.props;
+    const { handleClick, requestApi, quotations } = this.props;
     this.setState((prevState) => ({
       expenses: {
         ...prevState.expenses,
@@ -62,7 +62,7 @@ class Wallet extends React.Component {
     requestApi();
     const { expenses, isEdit } = this.state;
     if (!isEdit) {
-      handleClick({ ...expenses, exchangeRates: currencies[0] });
+      handleClick({ ...expenses, exchangeRates: quotations[0] });
     } else {
       this.onChangeEdit(expenses.id);
     }
@@ -70,12 +70,13 @@ class Wallet extends React.Component {
   };
 
   onChangeEdit = (id) => {
-    const { changeIsEdit, currencies, expensesStore } = this.props;
+    const { changeIsEdit, expensesStore } = this.props;
     const { expenses } = this.state;
     const indexExpense = expensesStore.findIndex((expense) => (
       expense.id === id
     ));
-    expensesStore[indexExpense] = { ...expenses, exchangeRates: currencies[0] };
+    const { exchangeRates } = expensesStore[indexExpense];
+    expensesStore[indexExpense] = { ...expenses, exchangeRates };
     changeIsEdit(expensesStore);
   }
 
@@ -86,7 +87,7 @@ class Wallet extends React.Component {
   }
 
   render() {
-    const { currenciesKey } = this.props;
+    const { currencies } = this.props;
     const { total, expenses, isEdit } = this.state;
     return (
       <>
@@ -94,7 +95,7 @@ class Wallet extends React.Component {
         <FormWallet
           isEdit={ isEdit }
           expenses={ expenses }
-          currenciesKey={ currenciesKey }
+          currencies={ currencies }
           onChangeInput={ this.onChangeInput }
           onSubmit={ this.onSubmit }
         />
@@ -106,7 +107,7 @@ class Wallet extends React.Component {
 
 const mapStateToProps = (state) => ({
   currencies: state.wallet.currencies,
-  currenciesKey: state.wallet.currenciesKey,
+  quotations: state.wallet.quotations,
   expensesStore: state.wallet.expenses,
 });
 
@@ -117,19 +118,21 @@ const mapDispatchToProps = (dispatch) => ({
 });
 
 Wallet.propTypes = {
-  currencies: PropTypes.arrayOf(PropTypes.shape({})),
+  currencies: PropTypes.arrayOf(PropTypes.string),
   requestApi: PropTypes.func,
-  currenciesKey: PropTypes.arrayOf(PropTypes.string),
+  quotations: PropTypes.PropTypes.arrayOf(PropTypes.shape({})),
   handleClick: PropTypes.func,
   changeIsEdit: PropTypes.func,
-  expensesStore: PropTypes.arrayOf(PropTypes.shape({})),
+  expensesStore: PropTypes.arrayOf(PropTypes.shape({
+    exchangeRates: PropTypes.shape({}),
+  })),
 };
 
 Wallet.defaultProps = {
   currencies: [],
-  requestApi: () => { },
-  currenciesKey: [],
-  handleClick: () => { },
+  requestApi: () => {},
+  quotations: [],
+  handleClick: () => {},
   changeIsEdit: () => {},
   expensesStore: [],
 };

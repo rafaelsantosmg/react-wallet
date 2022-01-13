@@ -3,7 +3,7 @@ import fetchApi from '../services/dataApi';
 
 export const SAVE_USER = 'SAVE_USER';
 export const CREATE_CURRENCIES = 'CREATE_CURRENCIES';
-export const SAVE_WALLET_CURRENCY = 'SAVE_WALLET_CURRENCY';
+export const SAVE_WALLET_QUOTATIONS = 'SAVE_WALLET_QUOTATIONS';
 export const SAVE_WALLET_EXPENSES = 'SAVE_WALLET_EXPENSES';
 export const EDIT_WALLET_EXPENSES = 'EDIT_WALLET_EXPENSES';
 
@@ -12,9 +12,9 @@ export const saveUser = (email) => ({
   email,
 });
 
-export const saveWalletCurrency = (currencies) => ({
-  type: SAVE_WALLET_CURRENCY,
-  currencies,
+export const saveWalletQuotations = (quotations) => ({
+  type: SAVE_WALLET_QUOTATIONS,
+  quotations,
 });
 
 export const saveWalletExpenses = (expenses) => ({
@@ -22,9 +22,9 @@ export const saveWalletExpenses = (expenses) => ({
   expenses,
 });
 
-export const createCurrencies = (currenciesKey) => ({
+export const createCurrencies = (currencies) => ({
   type: CREATE_CURRENCIES,
-  currenciesKey,
+  currencies,
 });
 
 export const editWalletExpenses = (expenses) => ({
@@ -37,7 +37,7 @@ const fetchRequest = () => async (dispatch) => {
     const response = await fetchApi();
     const data = await response;
     dispatch(createCurrencies(Object.keys(data)));
-    dispatch(saveWalletCurrency(data));
+    dispatch(saveWalletQuotations(data));
   } catch (error) {
     console.error(error);
   }

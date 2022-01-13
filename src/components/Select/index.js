@@ -19,7 +19,13 @@ export default class Select extends Component {
           onChange={ onChangeSelect }
         >
           { options.filter((option) => option !== 'USDT').map((option, index) => (
-            <option key={ index } value={ option }>{ option }</option>
+            <option
+              key={ index }
+              value={ option }
+              data-testid={ option }
+            >
+              { option }
+            </option>
           )) }
         </select>
       </label>

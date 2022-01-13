@@ -9,7 +9,7 @@ import './style.css';
 export default class FormWallet extends Component {
   render() {
     const { expenses: { value, description, currency, method, tag },
-      isEdit, onChangeInput, currenciesKey, onSubmit } = this.props;
+      isEdit, onChangeInput, currencies, onSubmit } = this.props;
     return (
       <form
         className={ isEdit ? 'wallet-form-edit' : 'wallet-form' }
@@ -38,7 +38,7 @@ export default class FormWallet extends Component {
               label="Moeda"
               value={ currency }
               dataTestId="currency-input"
-              options={ currenciesKey }
+              options={ currencies }
               onChangeSelect={ onChangeInput }
             />
           </div>
@@ -103,7 +103,7 @@ FormWallet.propTypes = {
     tag: PropTypes.string,
   }),
   onChangeInput: PropTypes.func,
-  currenciesKey: PropTypes.arrayOf(PropTypes.string),
+  currencies: PropTypes.arrayOf(PropTypes.string),
   onSubmit: PropTypes.func,
 };
 
@@ -111,6 +111,6 @@ FormWallet.defaultProps = {
   isEdit: false,
   expenses: {},
   onChangeInput: () => { },
-  currenciesKey: [],
+  currencies: [],
   onSubmit: () => {},
 };
