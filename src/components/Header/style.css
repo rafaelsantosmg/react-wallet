@@ -16,6 +16,10 @@
   padding: 0 20px;
 }
 
+.header-content h3 {
+  color: rgb(175, 22, 22);
+}
+
 .logo {
   display: flex;
   width: 200px;

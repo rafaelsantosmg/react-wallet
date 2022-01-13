@@ -30,7 +30,7 @@ export class Header extends Component {
           <div className="user-email">
             <p data-testid="email-field">{email}</p>
           </div>
-          <p>
+          <h3>
             Despesa totais R$
             {'  '}
             <span
@@ -38,8 +38,8 @@ export class Header extends Component {
             >
               { Number(total).toFixed(2) }
             </span>
-          </p>
-          <p data-testid="header-currency-field">BRL</p>
+          </h3>
+          <h3 data-testid="header-currency-field">BRL</h3>
         </div>
       </header>
     );
