@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { filterWalletExpenses } from '../../actions';
+import { editWalletExpenses } from '../../actions';
 import Button from '../Button';
 
 class TableWallet extends Component {
@@ -12,7 +12,7 @@ class TableWallet extends Component {
   }
 
   render() {
-    const { expenses } = this.props;
+    const { expenses, onChangeEdit } = this.props;
     return (
       <table className="table table-dark table-hover">
         <thead>
@@ -35,7 +35,7 @@ class TableWallet extends Component {
               <td>{ expense.tag }</td>
               <td>{ expense.method }</td>
               <td>{ expense.value }</td>
-              <td>{ expense.exchangeRates[expense.currency].name }</td>
+              <td>{ expense.exchangeRates[expense.currency].name.split('/')[0] }</td>
               <td>{ Number(expense.exchangeRates[expense.currency].ask).toFixed(2) }</td>
               <td>
                 { Number(expense.value
@@ -46,6 +46,8 @@ class TableWallet extends Component {
                 <Button
                   type="button"
                   btnClass="btn btn-dark"
+                  dataTestId="edit-btn"
+                  onChangeClick={ () => onChangeEdit(true, expense.id) }
                 >
                   <i className="bi bi-pencil-square" style={ { fontSize: '20px' } } />
                 </Button>
@@ -69,20 +71,23 @@ class TableWallet extends Component {
 
 const mapStateToProps = (state) => ({
   expenses: state.wallet.expenses,
+  isEdit: state.wallet.isEdit,
 });
 
 const mapDispatchToProps = (dispatch) => ({
-  removeExpense: (expense) => dispatch(filterWalletExpenses(expense)),
+  removeExpense: (expense) => dispatch(editWalletExpenses(expense)),
 });
 
 TableWallet.propTypes = {
   expenses: PropTypes.arrayOf(PropTypes.shape({})),
   removeExpense: PropTypes.func,
+  onChangeEdit: PropTypes.func,
 };
 
 TableWallet.defaultProps = {
   expenses: [''],
   removeExpense: () => {},
+  onChangeEdit: () => {},
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(TableWallet);

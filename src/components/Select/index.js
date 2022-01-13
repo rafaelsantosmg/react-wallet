@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 
 export default class Select extends Component {
   render() {
-    const { name, label, dataTestId, options, onChangeSelect } = this.props;
+    const { name, value, label, dataTestId, options, onChangeSelect } = this.props;
     return (
       <label
         className="col-form-label"
@@ -12,6 +12,7 @@ export default class Select extends Component {
         { label }
         <select
           name={ name }
+          value={ value }
           className="form-select"
           id="inputGroupSelect01"
           data-testid={ dataTestId }
@@ -28,6 +29,7 @@ export default class Select extends Component {
 
 Select.propTypes = {
   name: PropTypes.string,
+  value: PropTypes.string,
   label: PropTypes.string,
   dataTestId: PropTypes.string,
   options: PropTypes.arrayOf(PropTypes.string),
@@ -36,6 +38,7 @@ Select.propTypes = {
 
 Select.defaultProps = {
   name: '',
+  value: '',
   label: '',
   dataTestId: '',
   options: [''],

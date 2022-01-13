@@ -3,7 +3,7 @@ import {
   SAVE_WALLET_CURRENCY,
   CREATE_CURRENCIES,
   SAVE_WALLET_EXPENSES,
-  FILTER_WALLET_EXPENSES,
+  EDIT_WALLET_EXPENSES,
 } from '../actions';
 
 const INITIAL_STATE = {
@@ -29,10 +29,10 @@ const wallet = (state = INITIAL_STATE, action) => {
       ...state,
       expenses: [...state.expenses, action.expenses],
     };
-  case FILTER_WALLET_EXPENSES:
+  case EDIT_WALLET_EXPENSES:
     return {
       ...state,
-      expenses: action.expenses,
+      expenses: [...action.expenses],
     };
   default:
     return state;
